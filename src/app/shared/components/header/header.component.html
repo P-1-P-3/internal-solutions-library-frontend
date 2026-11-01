@@ -1,0 +1,46 @@
+<div class="max-lg:collapse shadow-sm w-auto mx-4 mt-2 rounded-md border border-slate-200">
+    <input id="navbar-1-toggle" class="peer hidden" type="checkbox" />
+    <label for="navbar-1-toggle" class="fixed inset-0 hidden max-lg:peer-checked:block"></label>
+
+    <div class="collapse-title navbar px-3 lg:px-6">
+        <div class="navbar-start">
+            <label for="navbar-1-toggle" class="btn btn-ghost lg:hidden">
+                <svg aria-label="Menu" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                </svg>
+            </label>
+            <a class="font-bold text-xl transition hover:text-slate-700" routerLink="/">Ticxar S.A.S</a>
+        </div>
+
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><button routerLink="/catalog">Catálogo</button></li>
+                <li><button>Contribuir</button></li>
+            </ul>
+        </div>
+
+        <div class="navbar-end">
+            <div class="dropdown dropdown-end">
+                <button aria-label="Perfil" class="cursor-pointer">
+                    <span class="flex size-9 items-center justify-center rounded-full bg-slate-950 text-xs font-bold text-white ring-2 ring-white">
+                        PR
+                    </span>
+                </button>
+    
+                <ul
+                    tabindex="-1"
+                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li><a>Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="collapse-content lg:hidden z-1">
+        <ul class="menu">
+            <li><button routerLink="/catalog">Catálogo</button></li>
+            <li><button>Contribuir</button></li>
+        </ul>
+    </div>
+</div>

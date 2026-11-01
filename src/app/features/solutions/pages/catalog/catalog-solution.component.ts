@@ -1,4 +1,5 @@
-import { Component, inject, signal, OnInit } from "@angular/core";
+import { AfterViewInit, Component, HostListener, inject, signal, OnInit } from "@angular/core";
+import { DOCUMENT } from "@angular/common";
 import { SolutionFilterSidebarComponent } from "../../components/solution-filter-sidebar/solution-filter-sidebar.component";
 import { SolutionService } from "../../service/solution.service";
 import { Categories, Tags, Technologies } from "../../../../shared/models/catalog-tables.interface";
@@ -11,11 +12,14 @@ import { CatalogSolution } from "../../models/catalog-solution.interface";
     templateUrl: 'catalog-solution.component.html',
     imports: [SolutionFilterSidebarComponent, SolutionResultGridComponent]
 })
-export default class CatalogSolutionComponent implements OnInit {
+export default class CatalogSolutionComponent implements OnInit, AfterViewInit {
     private readonly _solutionService = inject(SolutionService);
+    private readonly _document        = inject(DOCUMENT);
     
     private readonly _allSolutions = signal<CatalogSolution[]>([]);
 
+    public filterTop    = signal<number | null>(null);
+    public filterHeight = signal<number | null>(null);
     public categories   = signal<Categories[]>([]);
     public technologies = signal<Technologies[]>([]);
     public tags         = signal<Tags[]>([]);
@@ -25,6 +29,29 @@ export default class CatalogSolutionComponent implements OnInit {
         this.getFilterData();
         this.getSolutions();
     };
+
+    ngAfterViewInit() {
+        this.updateFilterViewport();
+    };
+
+    @HostListener('window:scroll')
+    @HostListener('window:resize')
+    private updateFilterViewport() {
+        const view = this._document.defaultView;
+        const header = this._document.querySelector<HTMLElement>('app-header > div');
+
+        if (!view || !header) return;
+        
+        if (!view.matchMedia('(min-width: 64rem)').matches) {
+            this.filterTop.set(null);
+            this.filterHeight.set(null);
+            return;
+        }
+
+        const top = Math.max(16, header.getBoundingClientRect().bottom + 16);
+        this.filterTop.set(top);
+        this.filterHeight.set(Math.max(0, view.innerHeight - top - 16));
+    }
 
     private getSolutions() {
         this._solutionService.getSolutions({ limit: 10, offset: 0}).subscribe({

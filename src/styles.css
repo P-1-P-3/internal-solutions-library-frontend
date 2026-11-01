@@ -2,3 +2,7 @@
 @plugin "daisyui"  {
     themes: corporate --default, buisiness --prefersdark;
 }
+
+body {
+    color: var(--color-slate-950)
+}
