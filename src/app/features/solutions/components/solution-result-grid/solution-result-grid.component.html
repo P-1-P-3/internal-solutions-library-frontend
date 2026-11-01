@@ -1,0 +1,5 @@
+<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    @for (solution of solutions(); track solution.id) {
+        <app-solutions-card class="min-w-0 w-full" [solution]="solution" />
+    }
+</div>
