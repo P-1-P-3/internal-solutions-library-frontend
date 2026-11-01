@@ -1,0 +1,7 @@
+<div class="w-full lg:w-8/12 lg:mx-auto lg:p-4">
+    @if (solution()) {
+        <app-solution-detail [solution]="solution()!" />
+    } @else {
+        <p>No fue posible consultar la información</p>
+    }
+</div>
