@@ -1,0 +1,20 @@
+<div class="stats stats-vertical lg:stats-horizontal bg-white shadow-sm w-full rounded-md border border-slate-200">
+    @for (category of categories(); track category.id) {
+        <a [routerLink]="['/catalog', category.id]" class="stat group cursor-pointer transition hover:-translate-y-1">
+            <div class="stat-value">{{ category.type }}</div>
+            <div class="stat-desc text-slate-600 flex items-center justify-between gap-1">
+                {{ category.solutionsCount }} soluciones 
+                <span aria-hidden="true" class="inline-flex transition-transform group-hover:translate-x-1 text-primary">
+                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11z" />
+                    </svg>
+                </span>
+            </div>
+        </a>
+    } @empty {
+        <div class="stat">
+            <div class="stat-value text-slate-400 font-semibold">No hay categorías disponibles</div>
+        </div>
+    }
+</div>

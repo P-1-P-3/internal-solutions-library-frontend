@@ -5,7 +5,7 @@ import { Categories, FunctionalAreas, Tags, Technologies } from "../../../shared
 import { Observable } from "rxjs";
 import { Pagination, Response } from "../../../shared/models/req-res.interface";
 import { CatalogSolution } from "../models/catalog-solution.interface";
-import { SolutionFilters } from "../models/filter-criteria.interface";
+import { SolutionFilters, SolutionSort } from "../models/filter-criteria.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +23,8 @@ export class SolutionService {
         return this._httpClient.get<Response<CatalogSolution>>(`${this.url}reusable-solutions/${solutionId}`);
     };
 
-    getSolutions(pagination: Pagination, filters?: SolutionFilters): Observable<Response<CatalogSolution[]>> {
-        const params = { filters, pagination };
+    getSolutions(pagination: Pagination, filters?: SolutionFilters, sort?: SolutionSort): Observable<Response<CatalogSolution[]>> {
+        const params = { filters, pagination, sort };
         const headers = this.getHeaders();
         return this._httpClient.post<Response<CatalogSolution[]>>(`${this.url}reusable-solutions`, params, { headers });
     };

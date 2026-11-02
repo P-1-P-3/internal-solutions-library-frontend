@@ -34,3 +34,14 @@ export interface Solution {
     created_by:             string;
     updated_by:             string;
 }
+
+export interface DashboardStats {
+    solutionsCount: number;
+    categoriesCount: number;
+    technologiesCount: number;
+    solutionsByCategory: SolutionsByCategory[];
+};
+
+export interface SolutionsByCategory extends Categories {
+    solutionsCount: number;
+};

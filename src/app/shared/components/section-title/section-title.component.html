@@ -1,0 +1,18 @@
+<div class="mb-6 flex items-end justify-between gap-4 border-b border-slate-200 pb-4">
+    <div>
+        <p class="text-xs font-bold tracking-widest text-primary uppercase">{{ eyebrow() }}</p>
+        <h2 class="mt-1 text-2xl font-bold tracking-tight text-slate-950">{{ title() }}</h2>
+    </div>
+
+    @if (action()) {
+        <a routerLink="/catalog" class="items-center gap-2 text-sm font-semibold transitio sm:inline-flex text-primary hover:text-primary/80">
+            <span>{{ action() }}</span>
+            <span class="inline-flex items-center gap-1 font-semibold">
+                <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11z" />
+                </svg>
+            </span>
+        </a>
+    }
+</div>
