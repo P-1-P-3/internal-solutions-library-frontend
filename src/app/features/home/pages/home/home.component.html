@@ -1,0 +1,55 @@
+<div class="w-full lg:w-8/12 lg:mx-auto lg:p-4">
+    <main class="min-h-screen w-full">
+        <section class="relative overflow-hidden border-b border-slate-200 px-5 py-16 sm:px-8 lg:py-24">
+            <div class="relative mx-auto max-w-7xl">
+                <div class="max-w-3xl">
+                    <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
+                        Libreria interna de <span class="text-primary">soluciones reutilizables</span>
+                    </h1>
+                    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+                        Centraliza, explora e integra patrones, componentes y buenas prácticas para construir mejor y reducir el tiempo de desarrollo.
+                    </p>
+
+                    <div class="relative mt-8 max-w-2xl">
+                        <app-search-solutions
+                            placeholder="Busca por JWT, Python, API..."
+                            (searchValue)="onSearch($event)" />
+                    </div>
+
+                    <div class="mt-5 flex flex-wrap items-center gap-2.5">
+                        @for (technology of technologies(); track technology.id) {
+                            <button class="btn btn-soft btn-accent font-semibold">{{ technology.technology }}</button>
+                        }
+                    </div>
+                </div>
+
+                <div class="mt-12 max-w-2xl">
+                    <app-stat-home 
+                        [solutionsLength]="stat().solutionsCount"
+                        [categoriesLength]="stat().categoriesCount"
+                        [technologiesLength]="stat().technologiesCount" />
+                </div>
+            </div>
+        </section>
+
+        <div class="mx-auto max-w-7xl space-y-16 px-5 py-14 sm:px-8 lg:py-20">
+            <section>
+                <app-section-title title="Categorías" eyebrow="Explora por" />
+
+                <app-category-stat [categories]="stat().solutionsByCategory" />
+            </section>
+
+            <section>
+                <app-section-title title="Contenido destacado" eyebrow="Seleccionado para ti" action="Ver catálogo completo" />
+
+                <div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    @for (featuredSolution of featuredSolutions(); track featuredSolution.id) {
+                        <app-solutions-card
+                            [solution]="featuredSolution"
+                        />
+                    }
+                </div>
+            </section>
+        </div>
+    </main>
+</div>

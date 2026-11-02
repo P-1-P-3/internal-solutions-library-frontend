@@ -5,3 +5,8 @@ export interface SolutionFilters {
     technologies: number[];
     tags:         number[]
 };
+
+export interface SolutionSort {
+    field: string;
+    order: 'ASC' | 'DESC';
+};
