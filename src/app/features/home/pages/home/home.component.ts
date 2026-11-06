@@ -1,5 +1,5 @@
 import { Component, inject, signal, OnInit } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { DashboardStats, Technologies } from "../../../../shared/models/catalog-tables.interface";
 import { SolutionService } from "../../../solutions/service/solution.service";
 import { StatComponent } from "../../components/stat/stat.component";
@@ -24,6 +24,7 @@ import { SolutionsCardComponent } from "../../../../shared/components/solutions-
 export default class HomeComponent implements OnInit {
     private readonly _solutionService       = inject(SolutionService);
     private readonly _dashboardStatsService = inject(DashboardStatsService);
+    private readonly _router                = inject(Router);
 
     featuredSolutions = signal<CatalogSolution[]>([]);
     technologies      = signal<Technologies[]>([]);
@@ -53,6 +54,6 @@ export default class HomeComponent implements OnInit {
     };
 
     onSearch(value: string) {
-        console.log('Search value:', value);
+        void this._router.navigate(['catalog'], { queryParams: { search: value } });
     };
 };
