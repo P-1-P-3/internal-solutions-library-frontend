@@ -1,7 +1,10 @@
-<div class="stats stats-vertical lg:stats-horizontal bg-white shadow-sm w-full rounded-md border border-slate-200">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
     @for (category of categories(); track category.id) {
-        <a [routerLink]="['/catalog', category.id]" class="stat group cursor-pointer transition hover:-translate-y-1">
-            <div class="stat-value">{{ category.type }}</div>
+        <a 
+            class="stat group min-w-0 rounded-box border border-slate-200 shadow-sm transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            [routerLink]="['catalog']" 
+            [queryParams]="{ category: category.id }" >
+            <div class="stat-value min-w-0 wrap-break-word">{{ category.type }}</div>
             <div class="stat-desc text-slate-600 flex items-center justify-between gap-1">
                 {{ category.solutionsCount }} soluciones 
                 <span aria-hidden="true" class="inline-flex transition-transform group-hover:translate-x-1 text-primary">

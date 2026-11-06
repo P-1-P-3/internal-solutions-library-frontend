@@ -1,5 +1,5 @@
 export interface SolutionFilters {
-    title:           string;
+    search:          string;
     categories:      number[];
     functionalAreas: number[];
     technologies:    number[];

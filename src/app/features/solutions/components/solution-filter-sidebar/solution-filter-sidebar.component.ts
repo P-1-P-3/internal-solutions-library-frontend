@@ -1,4 +1,4 @@
-import { Component, input, output } from "@angular/core";
+import { Component, effect, input, output, signal, untracked } from "@angular/core";
 import { SolutionFilters } from "../../models/filter-criteria.interface";
 import { Categories, FunctionalAreas, Tags, Technologies } from "../../../../shared/models/catalog-tables.interface";
 import { ComboboxComponent } from "../../../../shared/components/combobox/combobox.component";
@@ -9,33 +9,49 @@ import { ComboboxComponent } from "../../../../shared/components/combobox/combob
     imports: [ComboboxComponent]
 })
 export class SolutionFilterSidebarComponent {
-    public categories   = input<Categories[]>([]);
-    public fncAreas     = input<FunctionalAreas[]>([]);
-    public technologies = input<Technologies[]>([]);
-    public tags         = input<Tags[]>([]);
+    public initFilterValue = input<SolutionFilters>();
+    public categories      = input<Categories[]>([]);
+    public fncAreas        = input<FunctionalAreas[]>([]);
+    public technologies    = input<Technologies[]>([]);
+    public tags            = input<Tags[]>([]);
 
     filtersChange = output<SolutionFilters>();
 
-    public filters: SolutionFilters = {
-        title:        '',
-        categories:   [],
+    public filters = signal<SolutionFilters>({
+        search:          '',
+        categories:      [],
         functionalAreas: [],
-        technologies: [],
-        tags:         []
-    };
+        technologies:    [],
+        tags:            []
+    });
+
+    private readonly initFilterEffect = effect(() => {
+        const initial = this.initFilterValue();
+        if (!initial) return;
+
+        untracked(() => {
+            this.filters.set({
+                search: initial.search ?? '',
+                categories: [...(initial.categories ?? [])],
+                functionalAreas: [...(initial.functionalAreas ?? [])],
+                technologies: [...(initial.technologies ?? [])],
+                tags: [...(initial.tags ?? [])]
+            });
+        });
+    });
 
     private timeController = 0;
 
     tagLabel = (tag: Tags) => tag.tag;
 
-    onTitleInput(title: string): void {
+    onSearchInput(search: string): void {
         clearTimeout(this.timeController);
-        this.timeController = setTimeout(() => this.updateFilters({ ...this.filters, title }), 500);
+        this.timeController = setTimeout(() => this.updateFilters({ ...this.filters(), search }), 500);
     };
 
     onSelectedIdsTagsChange(selectedIds: number[]) {
-        this.filters.tags = selectedIds;
-        this.filtersChange.emit(this.filters);
+        this.filters().tags = selectedIds;
+        this.filtersChange.emit(this.filters());
     };
 
     onCheckboxChange(
@@ -44,16 +60,16 @@ export class SolutionFilterSidebarComponent {
         event: Event
     ): void {
         const checked       = (event.target as HTMLInputElement).checked;
-        const currentValues = this.filters[group];
+        const currentValues = this.filters()[group];
         const values = checked
             ? [...new Set([...currentValues, value])]
             : currentValues.filter(item => item !== value);
 
-        this.updateFilters({ ...this.filters, [group]: values });
+        this.updateFilters({ ...this.filters(), [group]: values });
     };
 
     private updateFilters(filters: SolutionFilters): void {
-        this.filters = filters;
+        this.filters.set(filters);
         this.filtersChange.emit(filters);
     };
 };

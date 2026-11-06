@@ -24,27 +24,25 @@
             </div>
 
             <div class="flex flex-col gap-4">
-                <label class="form-control w-full">
-                    <span class="label-text font-medium">Título</span>
-                    <input
-                        type="text"
-                        placeholder="Buscar por título"
-                        class="input input-bordered w-full mt-2"
-                        (input)="onTitleInput(searchTitle.value)"
-                        #searchTitle
-                    />
-                </label>
+                <input
+                    type="text"
+                    placeholder="Buscar por título o descripción…"
+                    class="input input-bordered w-full mt-2"
+                    [value]="filters().search"
+                    (input)="onSearchInput(searchInput.value)"
+                    #searchInput
+                />
 
                 <fieldset class="form-control">
                     <legend class="label-text mb-1 font-medium">Categoría</legend>
                     <div class="space-y-1">
                         @for (category of categories(); track category.id) {
-                            <label class="label cursor-pointer justify-start gap-3 rounded-lg px-2 py-2 hover:bg-base-200">
+                            <label class="label cursor-pointer justify-start w-full gap-3 rounded-lg px-2 py-1.5 hover:bg-base-200">
                                 <input
                                     type="checkbox"
-                                    [checked]="filters.categories.includes(category.id)"
+                                    [checked]="filters().categories.includes(category.id)"
                                     (change)="onCheckboxChange('categories', category.id, $event)"
-                                    class="checkbox checkbox-primary checkbox-sm"
+                                    class="checkbox checkbox-primary checkbox-xs"
                                 />
                                 <span class="label-text">{{ category.type }}</span>
                             </label>
@@ -56,12 +54,12 @@
                     <legend class="label-text mb-1 font-medium">Área funcional</legend>
                     <div class="space-y-1">
                         @for (fncArea of fncAreas(); track fncArea.id) {
-                            <label class="label cursor-pointer justify-start gap-3 rounded-lg px-2 py-2 hover:bg-base-200">
+                            <label class="label cursor-pointer justify-start w-full gap-3 rounded-lg px-2 py-1.5 hover:bg-base-200">
                                 <input
                                     type="checkbox"
-                                    [checked]="filters.functionalAreas.includes(fncArea.id)"
+                                    [checked]="filters().functionalAreas.includes(fncArea.id)"
                                     (change)="onCheckboxChange('functionalAreas', fncArea.id, $event)"
-                                    class="checkbox checkbox-primary checkbox-sm"
+                                    class="checkbox checkbox-primary checkbox-xs"
                                 />
                                 <span class="label-text">{{ fncArea.functional_area }}</span>
                             </label>
@@ -73,10 +71,10 @@
                     <legend class="label-text mb-1 font-medium">Tecnología</legend>
                     <div class="flex flex-col">
                         @for (technology of technologies(); track technology.id) {
-                            <label class="label cursor-pointer justify-start gap-3 rounded-lg px-2 py-1.5 hover:bg-base-200">
+                            <label class="label cursor-pointer justify-start w-full gap-3 rounded-lg px-2 py-1.5 hover:bg-base-200">
                                 <input
                                     type="checkbox"
-                                    [checked]="filters.technologies.includes(technology.id)"
+                                    [checked]="filters().technologies.includes(technology.id)"
                                     (change)="onCheckboxChange('technologies', technology.id, $event)"
                                     class="checkbox checkbox-primary checkbox-xs"
                                 />
@@ -93,7 +91,7 @@
                         valuePrefix="#"
                         [displayWith]="tagLabel"
                         [options]="tags()"
-                        [selectedIds]="filters.tags"
+                        [selectedIds]="filters().tags"
                         (selectedIdsChange)="onSelectedIdsTagsChange($event)" />
                 </div>
             </div>

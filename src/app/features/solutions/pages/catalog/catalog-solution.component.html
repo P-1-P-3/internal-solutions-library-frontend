@@ -5,6 +5,7 @@
         [style.height.px]="filterHeight()"
     >
         <app-solution-filter-sidebar class="block h-full"
+            [initFilterValue]="initFilterValue()"
             [categories]="categories()"
             [technologies]="technologies()"
             [fncAreas]="funcAreas()"

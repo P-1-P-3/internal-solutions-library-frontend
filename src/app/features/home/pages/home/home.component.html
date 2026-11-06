@@ -12,13 +12,18 @@
 
                     <div class="relative mt-8 max-w-2xl">
                         <app-search-solutions
-                            placeholder="Busca por JWT, Python, API..."
+                            placeholder="Buscar por título o descripción…"
                             (searchValue)="onSearch($event)" />
                     </div>
 
                     <div class="mt-5 flex flex-wrap items-center gap-2.5">
                         @for (technology of technologies(); track technology.id) {
-                            <button class="btn btn-soft btn-accent font-semibold">{{ technology.technology }}</button>
+                            <a 
+                                class="btn btn-soft btn-accent font-semibold" 
+                                [routerLink]="['catalog']"
+                                [queryParams]="{ technology: technology.id }" >
+                                {{ technology.technology }}
+                            </a>
                         }
                     </div>
                 </div>
@@ -42,7 +47,7 @@
             <section>
                 <app-section-title title="Contenido destacado" eyebrow="Seleccionado para ti" action="Ver catálogo completo" />
 
-                <div class="grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <div class="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-3">
                     @for (featuredSolution of featuredSolutions(); track featuredSolution.id) {
                         <app-solutions-card
                             [solution]="featuredSolution"
