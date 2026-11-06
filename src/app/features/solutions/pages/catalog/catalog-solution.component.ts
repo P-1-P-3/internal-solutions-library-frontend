@@ -2,7 +2,7 @@ import { AfterViewInit, Component, HostListener, inject, signal, OnInit } from "
 import { DOCUMENT } from "@angular/common";
 import { SolutionFilterSidebarComponent } from "../../components/solution-filter-sidebar/solution-filter-sidebar.component";
 import { SolutionService } from "../../service/solution.service";
-import { Categories, Tags, Technologies } from "../../../../shared/models/catalog-tables.interface";
+import { Categories, FunctionalAreas, Tags, Technologies } from "../../../../shared/models/catalog-tables.interface";
 import { SolutionFilters } from "../../models/filter-criteria.interface";
 import { SolutionResultGridComponent } from "../../components/solution-result-grid/solution-result-grid.component";
 import { CatalogSolution } from "../../models/catalog-solution.interface";
@@ -21,6 +21,7 @@ export default class CatalogSolutionComponent implements OnInit, AfterViewInit {
     public filterTop    = signal<number | null>(null);
     public filterHeight = signal<number | null>(null);
     public categories   = signal<Categories[]>([]);
+    public funcAreas    = signal<FunctionalAreas[]>([]);
     public technologies = signal<Technologies[]>([]);
     public tags         = signal<Tags[]>([]);
     public solutions    = signal<CatalogSolution[]>([]);
@@ -67,6 +68,10 @@ export default class CatalogSolutionComponent implements OnInit, AfterViewInit {
             next: (res) => this.categories.set(res?.data)
         });
 
+        this._solutionService.getFunctionalAreas().subscribe({
+            next: (res) => this.funcAreas.set(res?.data)
+        });
+
         this._solutionService.getTechnologies().subscribe({
             next: (res) => this.technologies.set(res?.data)
         });
@@ -79,7 +84,7 @@ export default class CatalogSolutionComponent implements OnInit, AfterViewInit {
     onFilterChange(solutionFilters: SolutionFilters) {
         const hasActiveFilters = Boolean(solutionFilters.title.trim())
             || solutionFilters.categories.length > 0
-            || solutionFilters.funcAreas.length > 0
+            || solutionFilters.functionalAreas.length > 0
             || solutionFilters.technologies.length > 0
             || solutionFilters.tags.length > 0;
 

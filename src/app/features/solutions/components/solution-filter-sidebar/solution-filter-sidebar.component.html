@@ -59,8 +59,8 @@
                             <label class="label cursor-pointer justify-start gap-3 rounded-lg px-2 py-2 hover:bg-base-200">
                                 <input
                                     type="checkbox"
-                                    [checked]="filters.funcAreas.includes(fncArea.id)"
-                                    (change)="onCheckboxChange('funcAreas', fncArea.id, $event)"
+                                    [checked]="filters.functionalAreas.includes(fncArea.id)"
+                                    (change)="onCheckboxChange('functionalAreas', fncArea.id, $event)"
                                     class="checkbox checkbox-primary checkbox-sm"
                                 />
                                 <span class="label-text">{{ fncArea.functional_area }}</span>
@@ -87,7 +87,11 @@
                 </fieldset>
 
                 <div>
-                    <app-tags-field 
+                    <app-combobox
+                        label="Tags"
+                        placeholder="Buscar tags..."
+                        valuePrefix="#"
+                        [displayWith]="tagLabel"
                         [options]="tags()"
                         [selectedIds]="filters.tags"
                         (selectedIdsChange)="onSelectedIdsTagsChange($event)" />

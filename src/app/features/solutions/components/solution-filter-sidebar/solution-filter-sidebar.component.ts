@@ -1,12 +1,12 @@
 import { Component, input, output } from "@angular/core";
 import { SolutionFilters } from "../../models/filter-criteria.interface";
 import { Categories, FunctionalAreas, Tags, Technologies } from "../../../../shared/models/catalog-tables.interface";
-import { TagsFieldComponent } from "../../../../shared/components/tags-field/tags-field.component";
+import { ComboboxComponent } from "../../../../shared/components/combobox/combobox.component";
 
 @Component({
     selector: 'app-solution-filter-sidebar',
     templateUrl: 'solution-filter-sidebar.component.html',
-    imports: [TagsFieldComponent]
+    imports: [ComboboxComponent]
 })
 export class SolutionFilterSidebarComponent {
     public categories   = input<Categories[]>([]);
@@ -19,12 +19,14 @@ export class SolutionFilterSidebarComponent {
     public filters: SolutionFilters = {
         title:        '',
         categories:   [],
-        funcAreas:    [],
+        functionalAreas: [],
         technologies: [],
         tags:         []
     };
 
     private timeController = 0;
+
+    tagLabel = (tag: Tags) => tag.tag;
 
     onTitleInput(title: string): void {
         clearTimeout(this.timeController);
@@ -37,7 +39,7 @@ export class SolutionFilterSidebarComponent {
     };
 
     onCheckboxChange(
-        group: 'categories' | 'funcAreas' | 'technologies',
+        group: 'categories' | 'functionalAreas' | 'technologies',
         value: number,
         event: Event
     ): void {

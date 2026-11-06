@@ -10,7 +10,7 @@ export class HeaderComponent {
     menuItems = [
         { label: 'Inicio', route: '/' },
         { label: 'Catálogo', route: '/catalog' },
-        { label: 'Contribuir', route: '/contribute' }
+        { label: 'Contribuir', route: '/catalog/contribute' }
     ];
 
 };

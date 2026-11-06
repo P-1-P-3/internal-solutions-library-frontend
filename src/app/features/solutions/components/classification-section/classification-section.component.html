@@ -1,0 +1,30 @@
+<section class="rounded-xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 lg:p-10">
+    <app-section-title title="Tecnologías y etiquetas" eyebrow="Clasificación" />
+
+    <div class="grid">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Tecnologías <span class="text-primary">*</span></legend>
+            <app-combobox 
+                placeholder="JavaScript, Node.js, Express"
+                [options]="technologies()" 
+                [selectedIds]="fields().technologies().value()"
+                [displayWith]="technologyLabel"
+                (selectedIdsChange)="onSelectedTechIdsChange($event)"
+                [appInputValidation]="fields().technologies()" />
+            <app-error-message [controls]="fields().technologies()" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Tags <span class="text-primary">*</span></legend>
+            <app-combobox 
+                placeholder="JWT, Utils, Seguridad"
+                [options]="tags()" 
+                [selectedIds]="fields().tags().value()" 
+                [displayWith]="tagLabel"
+                valuePrefix="#"
+                (selectedIdsChange)="onSelectedTagIdsChange($event)"
+                [appInputValidation]="fields().tags()" />
+            <app-error-message [controls]="fields().tags()" />
+        </fieldset>
+    </div>
+</section>

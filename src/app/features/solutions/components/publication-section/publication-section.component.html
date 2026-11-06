@@ -1,0 +1,27 @@
+<section class="rounded-xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 lg:p-10">
+    <app-section-title title="Repositorio y versión" eyebrow="Publicación" />
+
+    <div class="grid">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">URL del repositorio <span class="text-primary">*</span></legend>
+            <input 
+                type="text"
+                class="input w-full"
+                placeholder="https//github.com/organizacion/repositorio" 
+                [formField]="fields().repository_url"
+                [appInputValidation]="fields().repository_url()" />
+            <app-error-message [controls]="fields().repository_url()" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Versión <span class="text-primary">*</span></legend>
+            <input 
+                type="text"
+                class="input w-full"
+                placeholder="1.0.0" 
+                [formField]="fields().version"
+                [appInputValidation]="fields().version()" />
+            <app-error-message [controls]="fields().version()" />
+        </fieldset>
+    </div>
+</section>
