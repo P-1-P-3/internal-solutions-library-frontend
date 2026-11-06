@@ -1,0 +1,52 @@
+<!-- min-w-0 w-full space-y-12 -->
+<section class="rounded-xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 lg:p-10">
+    <app-section-title title="Presentación de la solución" eyebrow="Información básica" />
+
+    <div class="grid">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend validator">Titulo <span class="text-primary">*</span></legend>
+            <input 
+                type="text" 
+                class="input w-full" 
+                placeholder="Ej. Autenticación JWT para Node.js" 
+                [formField]="fields().title"
+                [appInputValidation]="fields().title()" />
+            <app-error-message [controls]="fields().title()" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Descripción <span class="text-primary">*</span></legend>
+            <textarea 
+                class="textarea h-24 w-full" 
+                placeholder="Explica qué resuelve, cuando utilizarlo y cual es su principal beneficio."
+                [formField]="fields().description" 
+                [appInputValidation]="fields().description()" >
+            </textarea>
+            <app-error-message [controls]="fields().description()" />
+        </fieldset>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Categoría <span class="text-primary">*</span></legend>
+                <select class="select w-full" [formField]="$any(fields().category)" [appInputValidation]="fields().category()">
+                    <option disabled selected value="null">Elige una categoría</option>
+                    @for (category of categories(); track category.id) {
+                        <option [value]="category.id">{{ category.type }}</option>
+                    }
+                </select>
+                <app-error-message [controls]="fields().category()" />
+            </fieldset>
+
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Área funcional <span class="text-primary">*</span></legend>
+                <select class="select w-full" [formField]="$any(fields().functional_area)" [appInputValidation]="fields().functional_area()">
+                    <option disabled selected value="null">Elige una área funcional</option>
+                    @for (functionalArea of functionalAreas(); track functionalArea.id) {
+                        <option [value]="functionalArea.id">{{ functionalArea.functional_area }}</option>
+                    }
+                </select>
+                <app-error-message [controls]="fields().functional_area()" />
+            </fieldset>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,33 @@
+<app-section-title title="Vista previa" eyebrow="Edición en curso" />
+
+<div class="card h-auto w-full bg-base-100 shadow-sm border-t-3 border-t-primary border border-slate-200">
+    <div class="card-body h-full">
+        <div class="badge badge-soft badge-primary font-semibold uppercase">
+            {{ category() }}
+        </div>
+
+        <h2 class="card-title font-bold min-w-0 line-clamp-2 min-h-8">{{ solution()?.basicInfo.title || 'Título de la solución' }}</h2>
+        <p class="line-clamp-3 min-h-10">{{ solution()?.basicInfo.description || 'La descripción aparecerá aquí mientras completas el formulario.' }}</p>
+        
+        <div class="max-h-16 overflow-y-auto mb-2">
+            <p class="text-gray-500 font-semibold mb-2">Tecnologías</p>
+            <div class="flex flex-wrap gap-2">
+                @for (technology of selectedTechnologies(); track technology.id) {
+                    <span class="badge badge-soft badge-accent">{{ technology.technology }}</span>
+                } @empty {
+                    <span class="badge badge-soft badge-accent">Tecnologías</span>
+                }
+            </div>
+        </div>
+
+        <div class="max-h-16 overflow-y-auto">
+            <div class="flex flex-wrap gap-2">
+                @for (tag of selectedTags(); track tag.id) {
+                    <div class="badge badge-soft badge-secondary">#{{ tag.tag }}</div>
+                } @empty {
+                    <div class="badge badge-soft badge-secondary">#Etiquetas</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

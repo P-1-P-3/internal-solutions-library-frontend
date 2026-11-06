@@ -1,9 +1,9 @@
 export interface SolutionFilters {
-    title:        string;
-    categories:   number[];
-    funcAreas:    number[];
-    technologies: number[];
-    tags:         number[]
+    title:           string;
+    categories:      number[];
+    functionalAreas: number[];
+    technologies:    number[];
+    tags:            number[];
 };
 
 export interface SolutionSort {

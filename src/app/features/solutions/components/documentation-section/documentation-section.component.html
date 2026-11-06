@@ -1,0 +1,45 @@
+<section class="rounded-xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 lg:p-10">
+    <app-section-title title="Contenido técnico" eyebrow="Documentación" />
+
+    <div class="grid">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Requisitos <span class="text-primary">*</span></legend>
+            <textarea 
+                class="textarea h-24 w-full"
+                [placeholder]="`Node.js 20 o superior\nConocimientos basicos de middleware`" 
+                [formField]="fields().requirements"
+                [appInputValidation]="fields().requirements()"></textarea>
+            <app-error-message [controls]="fields().requirements()" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Ejemplo de código o implementación <span class="text-primary">*</span></legend>
+            <textarea 
+                class="textarea h-50 w-full"
+                [placeholder]="`export function example() {\n    // Añade aquí tu implementación\n}`" 
+                [formField]="fields().implementation_example"
+                [appInputValidation]="fields().implementation_example()"></textarea>
+            <app-error-message [controls]="fields().implementation_example()" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Consideraciones y buenas prácticas <span class="text-primary">*</span></legend>
+            <textarea 
+                class="textarea h-24 w-full"
+                [placeholder]="`Usa variables de entorno para valores sensibles.\nAñade pruebas automatizadas`" 
+                [formField]="fields().best_practices"
+                [appInputValidation]="fields().best_practices()"></textarea>
+            <app-error-message [controls]="fields().best_practices()" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Errores comunes <span class="text-primary">*</span></legend>
+            <textarea 
+                class="textarea h-24 w-full"
+                [placeholder]="`Omitir la validacion de entradas.\nNo gestionar los casos de error.`" 
+                [formField]="fields().common_errors"
+                [appInputValidation]="fields().common_errors()"></textarea>
+            <app-error-message [controls]="fields().common_errors()" />
+        </fieldset>
+    </div>
+</section>
