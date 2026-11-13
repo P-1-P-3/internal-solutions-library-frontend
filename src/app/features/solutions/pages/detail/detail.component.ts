@@ -24,11 +24,7 @@ export default class DetailComponent implements OnInit {
 
     private getSolution() {
         this._solutionService.getSolution(this.solutionId()).subscribe({
-            next:  (res) => {
-                this.solution.set(res.data)
-                console.log(this.solution());
-                
-            },
+            next:  (res) => this.solution.set(res.data),
             error: (err) => this.solution.set(null)
         });
     };

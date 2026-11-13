@@ -5,6 +5,17 @@ export interface CreateSolution extends Solution {
     technologies: Technologies[];
 };
 
+export interface UpdateSolution extends Solution {
+    tags: {
+        new:    number[],
+        remove: number[],
+    },
+    technologies: {
+        new:    number[],
+        remove: number[],
+    }
+};
+
 export interface SolutionModel {
     basicInfo: {
         title: string;

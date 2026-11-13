@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 import { Pagination, Response } from "../../../shared/models/req-res.interface";
 import { CatalogSolution } from "../models/catalog-solution.interface";
 import { SolutionFilters, SolutionSort } from "../models/filter-criteria.interface";
-import { CreateSolution } from "../models/contribute.interface";
+import { CreateSolution, UpdateSolution } from "../models/contribute.interface";
 
 @Injectable({
     providedIn: 'root'
@@ -48,6 +48,11 @@ export class SolutionService {
 
     createSolution(solutions: CreateSolution): Observable<Response<Solution>> {
         const headers = this.getHeaders();
-        return this._httpClient.post<Response<Solution>>(`${this.url}reusable-solutions`, { ...solutions }, { headers: headers });
+        return this._httpClient.post<Response<Solution>>(`${this.url}reusable-solutions`, { ...solutions }, { headers });
+    };
+
+    updateSolution({id, ...solution}: UpdateSolution): Observable<Response<UpdateSolution>> {
+        const headers = this.getHeaders();
+        return this._httpClient.put<Response<UpdateSolution>>(`${this.url}reusable-solutions/${id}`, solution, { headers });
     };
 };
