@@ -57,7 +57,6 @@ export default class ContributeComponent implements OnInit {
         required(path.documentation.requirements, { message: message.required });
         required(path.documentation.implementation_example, { message: message.required });
         required(path.documentation.best_practices, { message: message.required });
-        required(path.documentation.common_errors, { message: message.required });
         required(path.publication.repository_url, { message: message.required });
         required(path.publication.version, { message: message.required });
 
