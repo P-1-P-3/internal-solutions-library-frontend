@@ -1,9 +1,9 @@
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from "@angular/core";
+import { Component, computed, ElementRef, inject, OnInit, signal, ViewChild } from "@angular/core";
 import { form, maxLength, required } from "@angular/forms/signals"
-import { Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 
 import { SolutionService } from "../../service/solution.service";
-import { CreateSolution, SolutionModel, solutionModel } from "../../models/contribute.interface";
+import { CreateSolution, SolutionModel, solutionModel, UpdateSolution } from "../../models/contribute.interface";
 import { BasicInfoSectionComponent } from "../../components/basic-info-section/basic-info-section.component";
 import { ClassificationSectionComponent } from "../../components/classification-section/classification-section.component";
 import { DocumentationSectionComponent } from "../../components/documentation-section/documentation-section.component";
@@ -24,7 +24,15 @@ import { Categories, FunctionalAreas, Tags, Technologies } from "../../../../sha
 })
 export default class ContributeComponent implements OnInit {
     private readonly _solutionService = inject(SolutionService);
+    private readonly _activatedRoute  = inject(ActivatedRoute);
     private readonly _router          = inject(Router);
+
+    private readonly solutionID = signal<string | null>(null);
+    private temporaryTags: Tags[]         = [];
+    private temporaryTech: Technologies[] = [];
+
+    readonly solutionId = computed(() => this.solutionID());
+    readonly action     = computed(() => this.solutionID() ? 'edit' : 'create');
 
     readonly categories      = signal<Categories[]>([]);
     readonly functionalAreas = signal<FunctionalAreas[]>([]);
@@ -58,6 +66,7 @@ export default class ContributeComponent implements OnInit {
     });
 
     ngOnInit() {
+        this.loadSolutionFromRoute();
         this.loadClassificationData();
     };
 
@@ -65,10 +74,18 @@ export default class ContributeComponent implements OnInit {
         void this._router.navigate(['catalog']);
     };
 
-    onPostSolution() {
+    executeAction(action: 'create' | 'edit') {
         this.solutionForm().markAsTouched();
         if (this.solutionForm().invalid()) return;
 
+        if(action === 'create') {
+            this.postSolution();
+        } else if (action  === 'edit') {
+            this.updateSolution();
+        }
+    };
+
+    private postSolution() {
         const solutionToCreate = {
             ...this.model().basicInfo,
             ...this.model().classification,
@@ -89,6 +106,86 @@ export default class ContributeComponent implements OnInit {
                 this.creationError.set(true);
             },
             error: () => this.creationError.set(true)
+        });
+    };
+
+    private updateSolution() {
+        const solutionId = this.solutionID();
+        if (!solutionId) return;
+
+        const currentTags = this.model().classification.tags;
+        const currentTechnologies = this.model().classification.technologies;
+
+        const solutionToUpdate = {
+            id: solutionId,
+            ...this.model().basicInfo,
+            ...this.model().documentation,
+            ...this.model().publication,
+            tags:         this.getSelectionChanges(currentTags, this.temporaryTags),
+            technologies: this.getSelectionChanges(currentTechnologies, this.temporaryTech),
+        } as unknown as UpdateSolution;
+        
+        this._solutionService.updateSolution(solutionToUpdate).subscribe({
+            next: (res) => {
+                if (res.status === 'success') {
+                    this.solutionForm().reset();
+                    this.solutionCreated.set(true);
+                    this.creationError.set(false);
+                    return;
+                }
+
+                this.creationError.set(true);
+            },
+            error: () => this.creationError.set(true)
+        });
+    };
+
+    private getSelectionChanges(currentIds: number[], originalItems: { id: number }[]) {
+        const originalIds = originalItems.map(item => item.id);
+
+        return {
+            new:    currentIds.filter(id => !originalIds.includes(id)),
+            remove: originalIds.filter(id => !currentIds.includes(id)),
+        };
+    };
+
+    private loadSolutionFromRoute() {
+        this.solutionID.set(this._activatedRoute.snapshot.paramMap.get('solution_id'));
+        
+        if(!this.solutionID()) return;
+
+        this._solutionService.getSolution(this.solutionID()!).subscribe({
+            next: (res) => {
+                const data = res.data;
+                if(res.status === 'success') {
+                    this.temporaryTags = data.tags;
+                    this.temporaryTech = data.technologies;
+
+                    this.model.set({
+                        basicInfo: {
+                            title:           data.title,
+                            description:     data.description,
+                            category:        data.category.id,
+                            functional_area: data.functional_area.id,
+                        },
+                        classification: {
+                            tags:         [...data.tags.map(item => item.id)],
+                            technologies: [...data.technologies.map(item => item.id)]
+                        },
+                        documentation: {
+                            best_practices:         data.best_practices,
+                            implementation_example: data.implementation_example,
+                            requirements:           data.requirements,
+                            common_errors:          data.common_errors,
+                        },
+                        publication: {
+                            repository_url: data.repository_url,
+                            version:        data.version
+                        }
+                    })
+                }
+            },
+            error: (err) => this._router.navigate(['catalog'])
         });
     };
 

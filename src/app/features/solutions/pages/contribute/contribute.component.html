@@ -12,8 +12,13 @@
             <div class="mt-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                 <div>
                     <p class="text-xs font-bold tracking-widest text-primary uppercase">Libreria interna</p>
-                    <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Agregar nueva solución</h1>
-                    <p class="mt-3 max-w-2xl text-slate-600">Documenta una solución reutilizable para que el equipo pueda encontrarla, entenderla e implementarla.</p>
+                    @if (solutionId()) {
+                        <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Actualizar recurso</h1>
+                        <p class="mt-3 max-w-2xl text-slate-600">Revisa y actualiza la información para mantener esta solución clara, vigente y útil para el equipo.</p>
+                    } @else {
+                        <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Agregar nueva solución</h1>
+                        <p class="mt-3 max-w-2xl text-slate-600">Documenta una solución reutilizable para que el equipo pueda encontrarla, entenderla e implementarla.</p>
+                    }
                 </div>
             </div>
         </div>
@@ -26,7 +31,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>La solución reutilizable se creó exitosamente.</span>
+                    <span>La solución reutilizable se {{solutionId() ? 'guardo' : 'creó'}} exitosamente.</span>
                 </div>
             }
             
@@ -46,7 +51,7 @@
     
             <div class="flex flex-col-reverse justify-end gap-3 sm:flex-row">
                 <button class="btn btn-outline" type="button" (click)="onCancel()" >Cancelar</button>
-                <button class="btn btn-primary" type="submit" (click)="onPostSolution()" >Publicar solución</button>
+                <button class="btn btn-primary" type="submit" (click)="executeAction(action())" >{{!solutionId() ? 'Publicar solución' : 'Guardar cambios'}}</button>
             </div>
         </div>
     

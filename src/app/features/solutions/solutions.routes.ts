@@ -15,6 +15,11 @@ export const solutionsRoutes: Routes = [
         path: 'contribute',
         title: 'Contribuir',
         loadComponent: () => import('./pages/contribute/contribute.component')
+    },
+    {
+        path: 'edit/:solution_id',
+        title: 'Editar solución',
+        loadComponent: () => import('./pages/contribute/contribute.component')
     }
 ];
 
