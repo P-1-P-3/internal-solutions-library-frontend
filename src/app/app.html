@@ -1,2 +1,5 @@
-<app-header />
+@if (isLoggedIn()) {
+    <app-header />
+}
+
 <router-outlet />
