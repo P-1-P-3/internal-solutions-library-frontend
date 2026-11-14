@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   imports: [RouterOutlet, HeaderComponent],
@@ -9,5 +10,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('internal-solutions-library');
+  private readonly _AuthService = inject(AuthService);
+
+  readonly isLoggedIn = computed(() => this._AuthService.isLoggedIn());
 }

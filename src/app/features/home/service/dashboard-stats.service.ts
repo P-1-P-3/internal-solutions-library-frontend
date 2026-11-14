@@ -21,4 +21,8 @@ export class DashboardStatsService {
     getDashboardStats(): Observable<Response<DashboardStats>> {
         return this._httpClient.get<Response<DashboardStats>>(`${this.url}dashboard/stats`);
     };
+
+    getStatCount(): Observable<Response<DashboardStats>> {
+        return this._httpClient.get<Response<DashboardStats>>(`${this.url}dashboard/stat-count`);
+    };
 };
