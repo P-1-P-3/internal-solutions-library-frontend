@@ -26,7 +26,8 @@ export class HeaderComponent {
     };
 
     getNameInitials(name: string): string {
-        const nameSeg = name.split(' ');
+        if (!name) return '';
+        const nameSeg = name?.split(' ');
 
         const initial1 = nameSeg.at(0)?.at(0);
         const initial2 = nameSeg.at(1)?.at(0);

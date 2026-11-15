@@ -1,0 +1,79 @@
+<!-- min-w-0 w-full space-y-12 -->
+<section class="rounded-xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 lg:p-10">
+    <app-section-title title="Acceso y seguridad" eyebrow="Define sus credenciales temporales y nivel de acceso." [design]="2" />
+
+    <div class="grid">
+        <fieldset class="fieldset">
+            <legend class="fieldset-legend">Rol <span class="text-primary">*</span></legend>
+            <select class="select w-full" [formField]="$any(fields().role)" [appInputValidation]="fields().role()">
+                <option disabled selected value="null">Elige un rol</option>
+                @for (role of roles(); track role.id) {
+                    <option [value]="role.id">{{ role.name }}</option>
+                }
+            </select>
+            <app-error-message [controls]="fields().role()" />
+        </fieldset>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    Contraseña 
+                    @if (fields().password().required()) {
+                        <span class="text-primary">*</span>
+                    }
+                </legend>
+                <input 
+                    type="password" 
+                    class="input w-full" 
+                    placeholder="Introduce una contraseña" 
+                    [formField]="fields().password"
+                    [appInputValidation]="fields().password()" />
+                <app-error-message [controls]="fields().password()" />
+            </fieldset>
+    
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">
+                    Confirmar contraseña 
+                    @if (fields().confirm_password().required()) {
+                        <span class="text-primary">*</span>
+                    }
+                </legend>
+                <input 
+                    type="password" 
+                    class="input w-full" 
+                    placeholder="Confirma contraseña"
+                    [formField]="fields().confirm_password"
+                    [appInputValidation]="fields().confirm_password()" />
+                <app-error-message [controls]="fields().confirm_password()" />
+            </fieldset>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2 mt-2">
+            <fieldset class="fieldset bg-base-100 border border-base-300 rounded-box p-4 transition hover:border-primary">
+                <label class="label gap-3">
+                    <input 
+                        type="checkbox"
+                        class="checkbox checkbox-primary"
+                        [formField]="fields().is_active" />
+                    <span>
+                        <strong class="block text-sm text-slate-950">Usuario activo</strong>
+                        <span class="mt-1 block text-xs leading-5 text-slate-500">Puede acceder inmediatamente al sistema.</span>
+                    </span>
+                </label>
+            </fieldset>
+
+            <fieldset class="fieldset bg-base-100 border border-base-300 rounded-box p-4 transition hover:border-primary">
+                <label class="label gap-3">
+                    <input
+                        type="checkbox"
+                        class="checkbox checkbox-primary"
+                        [formField]="fields().must_change_password" />
+                    <span>
+                        <strong class="block text-sm text-slate-950">Forzar nueva contraseña</strong>
+                        <span class="mt-1 block text-xs leading-5 text-slate-500">Debe cambiarla en su primer acceso.</span>
+                    </span>
+                </label>
+            </fieldset>
+        </div>
+    </div>
+</section>

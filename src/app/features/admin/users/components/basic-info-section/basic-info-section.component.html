@@ -1,0 +1,30 @@
+<!-- min-w-0 w-full space-y-12 -->
+<section class="rounded-xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 lg:p-10">
+    <app-section-title title="Información personal" eyebrow="Datos con los que identificaremos al usuario." [design]="2" />
+
+    <div class="grid">
+        <div class="grid gap-5 sm:grid-cols-2">
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend validator">Nombre completo <span class="text-primary">*</span></legend>
+                <input 
+                    type="text" 
+                    class="input w-full" 
+                    placeholder="Ej. Andres Ramírez" 
+                    [formField]="fields().fullName"
+                    [appInputValidation]="fields().fullName()" />
+                <app-error-message [controls]="fields().fullName()" />
+            </fieldset>
+    
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Correo electrónico <span class="text-primary">*</span></legend>
+                <input 
+                    type="email" 
+                    class="input w-full" 
+                    placeholder="nombre@ejemplo.com" 
+                    [formField]="fields().email"
+                    [appInputValidation]="fields().email()" />
+                <app-error-message [controls]="fields().email()" />
+            </fieldset>
+        </div>
+    </div>
+</section>
