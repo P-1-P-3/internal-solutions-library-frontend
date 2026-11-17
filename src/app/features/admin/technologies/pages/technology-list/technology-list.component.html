@@ -1,0 +1,58 @@
+<section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div class="space-y-6 p-4 sm:p-6 border-b border-slate-100">
+        <div class="border-b border-slate-200 mb-6 pb-6">
+            <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-950">Tecnologías</h2>
+                    <p class="mt-1 text-sm text-slate-500">Gestiona los lenguajes, frameworks y herramientas del catálogo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row">
+            <input type="text" placeholder="Nueva tecnología..." class="input w-full" #inNewTag />
+            <button class="btn btn-neutral" (click)="addTag(inNewTag.value)">Agregar</button>
+        </div>
+
+        @if (msgSuccess()) {
+            <div #successMessage role="alert" class="alert alert-success alert-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ msgSuccess() }}</span>
+            </div>
+        }
+
+        @if (msgError()) {
+            <div role="alert" class="alert alert-error alert-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ msgError() }}</span>
+            </div>
+        }
+
+        <div class="border border-slate-200 rounded-2xl overflow-auto">
+            <app-table
+                [columns]="columns()"
+                [data]="technologies()"
+                rowVerticalPadding="0.5rem"
+                (executeAction)="handleTableAction($event)"
+            />
+        </div>
+    </div>
+</section>
+
+@if (techToEdit(); as tech) {
+    <app-edit-modal
+        title="Editar tecnología"
+        label="Nombre de la tecnología"
+        placeholder="Escribe el nombre de la tecnología"
+        saveLabel="Guardar cambios"
+        [initialValue]="tech.technology"
+        [isSaving]="isSavingEdit()"
+        [errorMessage]="editError()"
+        (save)="saveTagEdit($event)"
+        (editCancelled)="closeEditTagModal()"
+    />
+}

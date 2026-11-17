@@ -1,23 +1,25 @@
 import { Routes } from "@angular/router";
-import { roleGuard } from "../../core/guards/role.guard";
 
 export const adminRoutes: Routes = [
     {
         path: 'users',
-        children: [
-            {
-                path: 'new',
-                title: 'Usuario',
-                loadComponent: () => import('./users/pages/user-create/user-create.component'),
-                canActivate: [ roleGuard([1]) ]
-            },
-            {
-                path: ':user_id',
-                title: 'Usuario',
-                loadComponent: () => import('./users/pages/user-create/user-create.component'),
-                canActivate: [ roleGuard([1]) ]
-            }
-        ]
+        loadChildren: () => import('./users/user.routes')
+    },
+    {
+        path: 'tags',
+        loadChildren: () => import('./tags/tag.routes')
+    },
+    {
+        path: 'technologies',
+        loadChildren: () => import('./technologies/technology.routes')
+    },
+    {
+        path: 'categories',
+        loadChildren: () => import('./categories/category.routes')
+    },
+    {
+        path: 'functional-areas',
+        loadChildren: () => import('./functional-areas/functional-area.routes')
     },
 ];
 

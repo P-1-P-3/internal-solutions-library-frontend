@@ -51,3 +51,8 @@ export interface DashboardStats {
 export interface SolutionsByCategory extends Categories {
     solutionsCount: number;
 };
+
+export interface Sort {
+    field: string;
+    order: 'ASC' | 'DESC';
+};

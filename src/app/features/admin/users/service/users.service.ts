@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { configService } from "../../../../core/config/config";
-import { Response } from "../../../../shared/models/req-res.interface";
-import { Roles } from "../../../../shared/models/catalog-tables.interface";
+import { Pagination, Response } from "../../../../shared/models/req-res.interface";
+import { Roles, Sort } from "../../../../shared/models/catalog-tables.interface";
 import { User, UserCrUp } from "../models/users.interface";
 
 @Injectable({
@@ -21,16 +21,23 @@ export class UsersService {
         return this._httpClient.get<Response<User>>(`${this.url}users/${id}`);
     };
 
+    getUsers(pagination?: Pagination, filters?: string, sort?: Sort): Observable<Response<User[]>> {
+        const payload = { pagination, filters, sort };
+        const headers = this.getHeaders();
+
+        return this._httpClient.post<Response<User[]>>(`${this.url}users/search`, payload, { headers });
+    };
+
     getRoles(): Observable<Response<Roles[]>> {
         return this._httpClient.get<Response<Roles[]>>(`${this.url}roles`);
     };
 
-    createUser(user: UserCrUp, password: string) {
+    createUser(user: UserCrUp, password: string): Observable<Response<User>> {
         const headers = this.getHeaders();
         return this._httpClient.post<Response<User>>(`${this.url}users`, {...user, password}, { headers });
     };
 
-    updateUser({id, ...user}: UserCrUp, password?: string) {
+    updateUser({id, ...user}: UserCrUp, password?: string): Observable<Response<any>> {
         const headers = this.getHeaders();
         const payload = {
             ...user,
@@ -38,5 +45,9 @@ export class UsersService {
         };
         
         return this._httpClient.put<Response<any>>(`${this.url}users/${id}`, payload, { headers });
+    };
+
+    deleteUser(id: string): Observable<Response<any>> {
+        return this._httpClient.delete<Response<any>>(`${this.url}users/${id}`);
     };
 };

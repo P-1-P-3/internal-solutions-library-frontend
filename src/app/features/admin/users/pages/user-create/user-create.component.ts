@@ -79,7 +79,7 @@ export default class UserCreateComponent implements OnInit {
     };
 
     onCancel() {
-        void this._router.navigate(['/']);
+        void this._router.navigate(['/admin/users']);
     };
 
     private createUser() {

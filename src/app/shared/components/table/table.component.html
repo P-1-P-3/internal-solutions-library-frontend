@@ -1,0 +1,106 @@
+<div class="overflow-x-auto">
+    <table class="table">
+        <thead class="bg-slate-50 text-xs font-semibold uppercase">
+            <tr>
+                @if (selectionMode() !== 'none') {
+                    <th class="px-6 py-3"></th>
+                }
+
+                @for (column of columns(); track column.id) {
+                    <th class="px-6 py-3" [style.min-width]="column.width" [style.text-align]="column.align ?? null">{{ column.title }}</th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (row of getPaginatedData(); track $index) {
+                <tr>
+                    @if (selectionMode() !== 'none') {
+                        <td class="align-middle px-6" [style.padding-block]="rowVerticalPadding()">
+                            @if (selectionMode() === 'single') {
+                                <input class="radio" type="radio" (click)="toggleSelection(row)" (keydown.enter)="toggleSelection(row)" [checked]="isSelected(row)">
+                            } @else if (selectionMode() === 'multiple') {
+                                <input class="checkbox" type="checkbox" (click)="toggleSelection(row)" (keydown.enter)="toggleSelection(row)" [checked]="isSelected(row)">
+                            }
+                        </td>
+                    }
+
+                    @for (column of columns(); track column.id) {
+                        <td class="px-6" [style.padding-block]="rowVerticalPadding()" [style.text-align]="column.align ?? null">
+                            @switch (column.type) {
+                                @case ('action') {
+                                    @for (action of column.actions; track action.id) {
+                                        <button
+                                            class="mx-0.5"
+                                            [class]="action.class ?? 'btn btn-ghost'"
+                                            [title]="action.title"
+                                            [disabled]="action.disabled"
+                                            (click)="executeAction.emit({ action: action.id, row })">
+                                            @if (action.icon) {
+                                                <i [class]="action.icon"></i>
+                                            }
+                                            {{ action.label ?? action.title }}
+                                        </button>
+                                    }
+                                }
+                                @case ('badge') {
+                                    <span [class]="getCellClass(column, row)">{{ getCellText(column, row) }}</span>
+                                }
+                                @case ('icon') {
+                                    @if (getCellText(column, row); as iconClass) {
+                                        <i [class]="iconClass"></i>
+                                    }
+                                }
+                                @case ('avatar') {
+                                    <span
+                                        class="flex size-9 items-center justify-center rounded-full bg-slate-950 text-xs font-bold text-white ring-2 ring-white"
+                                        aria-hidden="true">
+                                        {{ getCellText(column, row) }}
+                                    </span>
+                                }
+                                @case ('stacked') {
+                                    <div class="flex items-center gap-3">
+                                        @if (column.avatar) {
+                                            <span
+                                                class="flex size-9 shrink-0 items-center justify-center rounded-full bg-slate-950 text-xs font-bold text-white ring-2 ring-white"
+                                                aria-hidden="true">
+                                                {{ getStackedAvatarText(column, row) }}
+                                            </span>
+                                        }
+                                        <div class="flex min-w-0 flex-col">
+                                            <span class="font-semibold text-slate-950">
+                                                {{ getStackedPrimaryText(column, row) }}
+                                            </span>
+                                            <span class="text-sm text-slate-500">
+                                                {{ getStackedSecondaryText(column, row) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                                @case ('date') {
+                                    {{ getDateValue(column, row) | date: (column.dateFormat ?? 'yyyy-MM-dd HH:mm:ss') }}
+                                }
+                                @default {
+                                    <span [class]="column.class">{{ getCellText(column, row) }}</span>
+                                }
+                            }
+                        </td>
+                    }
+
+                </tr>
+            } @empty {
+                <tr class="text-center"><td class="px-6 py-3" colspan="100%">No hay información para mostrar</td></tr> 
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="px-6 py-3">
+    <app-pagination
+        [totalRecords]="this.data().length"
+        [pageSize]="pageSize()"
+        [currentPage]="currentPage()"
+        (currentPageChange)="currentPage.set($event)"
+        (pageSizeChange)="pageSize.set($event)"
+    />
+</div>

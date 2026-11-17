@@ -1,6 +1,7 @@
 import { Component, computed, inject } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../../../core/services/auth.service";
+import { getNameInitials as formatNameInitials } from "../../utils/name-initials";
 
 @Component({
     selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent {
     readonly menuItems = [
         { label: 'Inicio', route: '/' },
         { label: 'Catálogo', route: '/catalog' },
-        { label: 'Contribuir', route: '/catalog/contribute' }
+        { label: 'Contribuir', route: '/catalog/contribute' },
+        { label: 'Administración', route: '/admin/users' }
     ];
 
     logout() {
@@ -26,11 +28,6 @@ export class HeaderComponent {
     };
 
     getNameInitials(name: string): string {
-        if (!name) return '';
-        const nameSeg = name?.split(' ');
-
-        const initial1 = nameSeg.at(0)?.at(0);
-        const initial2 = nameSeg.at(1)?.at(0);
-        return `${initial1}${initial2}`;
+        return formatNameInitials(name);
     };
 };

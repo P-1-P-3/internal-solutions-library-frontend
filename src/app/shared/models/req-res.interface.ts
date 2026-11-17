@@ -4,6 +4,15 @@ export interface Response<T> {
 };
 
 export interface Pagination {
-    limit:  number;
-    offset: number;
+    page:  number;
+    pageSize: number;
 };
+
+export interface PaginationRes {
+    hasNext: boolean;
+    hasPrevious: boolean;
+    page: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+}

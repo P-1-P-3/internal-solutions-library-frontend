@@ -1,0 +1,42 @@
+<dialog
+    class="modal modal-open"
+    aria-labelledby="edit-modal-title"
+    (keydown.escape)="close()">
+    <div class="modal-box">
+        <h2 id="edit-modal-title" class="text-lg font-bold">{{ title() }}</h2>
+
+        <form (submit)="submit($event)">
+            <label for="edit-modal-value" class="label mt-4">{{ label() }}</label>
+            <input
+                id="edit-modal-value"
+                class="input w-full"
+                [placeholder]="placeholder()"
+                [value]="value()"
+                (input)="value.set(editInput.value); validationError.set('')"
+                [disabled]="isSaving()"
+                #editInput
+                required />
+
+            @if (validationError() || errorMessage()) {
+                <p class="mt-2 text-sm text-error" role="alert">
+                    {{ validationError() || errorMessage() }}
+                </p>
+            }
+
+            <div class="modal-action">
+                <button type="button" class="btn" [disabled]="isSaving()" (click)="close()">Cancelar</button>
+                <button type="submit" class="btn btn-neutral" [disabled]="isSaving()">
+                    {{ isSaving() ? 'Guardando...' : saveLabel() }}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <button
+        type="button"
+        class="modal-backdrop"
+        aria-label="Cerrar modal"
+        [disabled]="isSaving()"
+        (click)="close()">
+    </button>
+</dialog>

@@ -1,0 +1,76 @@
+<section class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div class="space-y-6 p-4 sm:p-6 border-b border-slate-100">
+        <div class="border-b border-slate-200 mb-6 pb-6">
+            <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-950">Tags</h2>
+                    <p class="mt-1 text-sm text-slate-500">Mantén consistentes las etiquetas utilizadas para encontrar recursos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row">
+            <input type="text" placeholder="Nuevo tag..." class="input w-full" #inNewTag />
+            <button class="btn btn-neutral" (click)="addTag(inNewTag.value)">Agregar</button>
+        </div>
+
+        <div>
+            <label class="input">
+                <span class="sr-only">Buscar etiquetas</span>
+                <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </g>
+                </svg>
+                <input 
+                    type="text" 
+                    placeholder="Buscar etiqueta..." 
+                    [value]="searchQuery()"
+                    (input)="onSearchInput(searchInput.value)"
+                    #searchInput />
+            </label>
+        </div>
+
+        @if (msgSuccess()) {
+            <div #successMessage role="alert" class="alert alert-success alert-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ msgSuccess() }}</span>
+            </div>
+        }
+
+        @if (msgError()) {
+            <div role="alert" class="alert alert-error alert-soft">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ msgError() }}</span>
+            </div>
+        }
+
+        <div class="border border-slate-200 rounded-2xl overflow-auto">
+            <app-table
+                [columns]="columns()"
+                [data]="filteredTags()"
+                rowVerticalPadding="0.5rem"
+                (executeAction)="handleTableAction($event)"
+            />
+        </div>
+    </div>
+</section>
+
+@if (tagToEdit(); as tag) {
+    <app-edit-modal
+        title="Editar etiqueta"
+        label="Nombre de la etiqueta"
+        placeholder="Escribe el nombre de la etiqueta"
+        saveLabel="Guardar cambios"
+        [initialValue]="tag.tag"
+        [isSaving]="isSavingEdit()"
+        [errorMessage]="editError()"
+        (save)="saveTagEdit($event)"
+        (editCancelled)="closeEditTagModal()"
+    />
+}

@@ -8,6 +8,7 @@ export interface User {
     must_change_password: boolean;
     creation_date: string;
     update_date: string;
+    last_login: string;
     role: Roles
 };
 
