@@ -1,0 +1,24 @@
+<section class="w-full overflow-hidden rounded-xl border border-slate-200 bg-base-100 shadow-sm">
+    <header class="border-b border-slate-100 px-5 py-4">
+        <h2 class="font-semibold text-slate-950">Actividad</h2>
+        <p class="mt-1 text-sm text-slate-500">Registro y última actualización del usuario</p>
+    </header>
+
+    <dl class="grid grid-cols-1 divide-y divide-slate-100">
+        <div class="p-5">
+            <dt class="text-sm font-medium text-slate-500">Fecha de creación</dt>
+            <dd class="mt-1 font-semibold text-slate-950">
+                {{ metadata().creation_date ?? dateNow | date: "dd 'de' MMMM 'de' y" }}
+            </dd>
+        </div>
+
+        @if (metadata().update_date) {
+            <div class="p-5">
+                <dt class="text-sm font-medium text-slate-500">Última actualización</dt>
+                <dd class="mt-1 font-semibold text-slate-950">
+                    {{ metadata().update_date | date: "dd 'de' MMMM 'de' y" }}
+                </dd>
+            </div>
+        }
+    </dl>
+</section>

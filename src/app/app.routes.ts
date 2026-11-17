@@ -14,5 +14,9 @@ export const routes: Routes = [
     {
         path: 'catalog',
         loadChildren: () => import('./features/solutions/solutions.routes')
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./features/admin/admin.routes')
     }
 ];

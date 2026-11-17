@@ -7,7 +7,8 @@ import { RouterLink } from "@angular/router";
     imports: [RouterLink],
 })
 export class SectionTitleComponent {
-    title   = input.required<string>();
-    eyebrow = input<string>();
-    action  = input<string>();
+    title     = input.required<string>();
+    eyebrow   = input<string>();
+    action    = input<string>();
+    design    = input<number>(1);
 };

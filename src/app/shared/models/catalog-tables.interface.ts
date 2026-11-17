@@ -18,6 +18,12 @@ export interface Tags {
     tag: string;
 };
 
+export interface Roles {
+    id:          number;
+    name:        string;
+    description: string;
+};
+
 export interface Solution {
     id:                     string;
     title:                  string;
@@ -44,4 +50,9 @@ export interface DashboardStats {
 
 export interface SolutionsByCategory extends Categories {
     solutionsCount: number;
+};
+
+export interface Sort {
+    field: string;
+    order: 'ASC' | 'DESC';
 };
