@@ -4,7 +4,7 @@ import { configService } from "../../../core/config/config";
 import { Categories, FunctionalAreas, Solution, Tags, Technologies } from "../../../shared/models/catalog-tables.interface";
 import { Observable } from "rxjs";
 import { Pagination, Response } from "../../../shared/models/req-res.interface";
-import { CatalogSolution } from "../models/catalog-solution.interface";
+import { CatalogSolution, CatalogSolutionRes } from "../models/catalog-solution.interface";
 import { SolutionFilters, SolutionSort } from "../models/filter-criteria.interface";
 import { CreateSolution, UpdateSolution } from "../models/contribute.interface";
 
@@ -24,10 +24,10 @@ export class SolutionService {
         return this._httpClient.get<Response<CatalogSolution>>(`${this.url}reusable-solutions/${solutionId}`);
     };
 
-    getSolutions(pagination: Pagination, filters?: SolutionFilters, sort?: SolutionSort): Observable<Response<CatalogSolution[]>> {
+    getSolutions(pagination: Pagination, filters?: SolutionFilters, sort?: SolutionSort): Observable<Response<CatalogSolutionRes>> {
         const params = { filters, pagination, sort };
         const headers = this.getHeaders();
-        return this._httpClient.post<Response<CatalogSolution[]>>(`${this.url}reusable-solutions/search`, params, { headers });
+        return this._httpClient.post<Response<CatalogSolutionRes>>(`${this.url}reusable-solutions/search`, params, { headers });
     };
 
     getCategories(): Observable<Response<Categories[]>> {

@@ -40,8 +40,8 @@ export default class HomeComponent implements OnInit {
     };
 
     private getData() {
-        this._solutionService.getSolutions({ limit: 3, offset: 0 }, undefined, { field: 'update_date', order: 'DESC' }).subscribe({
-            next: (res) => this.featuredSolutions.set(res?.data)
+        this._solutionService.getSolutions({ page: 1, pageSize: 3 }, undefined, { field: 'update_date', order: 'DESC' }).subscribe({
+            next: (res) => this.featuredSolutions.set(res?.data.items)
         });
 
         this._solutionService.getTechnologies().subscribe({
