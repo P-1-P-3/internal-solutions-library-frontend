@@ -14,11 +14,30 @@
         />
     </div>
 
-    <div class="min-w-0 w-full">
-        <div class="mb-4">
-            <p class="text-sm font-medium text-base-content/60">{{ solutions().length }} resultados</p>
+    <div class="flex flex-col gap-6 min-w-0 w-full">
+        <div>
+            <p class="text-sm font-medium text-base-content/60">{{ totalItems() }} resultados</p>
         </div>
 
-        <app-solution-result-grid [solutions]="solutions()" />
+        @if (loadError()) {
+            <p class="alert alert-error alert-soft" role="alert">{{ loadError() }}</p>
+        }
+
+        @defer (on viewport) {
+            <app-solution-result-grid [solutions]="solutions()" />
+        } @placeholder {
+            <p>Cargando...</p>
+        }
+
+        <div>
+            <app-pagination
+                labelSize="Soluciones por página"
+                [totalRecords]="totalItems()"
+                [pageSize]="pageSize()"
+                [currentPage]="currentPage()"
+                (currentPageChange)="currentPage.set($event)"
+                (pageSizeChange)="pageSize.set($event)"
+            />
+        </div>
     </div>
 </div>

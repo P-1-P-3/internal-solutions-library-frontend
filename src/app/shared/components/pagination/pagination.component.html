@@ -1,0 +1,71 @@
+<div class="flex justify-between items-center flex-wrap gap-3 text-slate-950 text-sm">
+
+    <div class="flex items-center gap-2">
+        @if (showPageSizeSelector()) {
+            <label for="page-size" class="mb-0 text-nowrap">{{ labelSize() }}</label>
+    
+            <select #selPageSize
+                    id="page-size"
+                    class="select"
+                    [value]="pageSize()"
+                    (change)="setPageSize(selPageSize.value)">
+                @for (size of pageSizeOption(); track $index) {
+                    <option [value]="size">{{ size }}</option>
+                }
+            </select>
+        }
+    </div>
+
+    <div class="flex items-center">
+
+        <span class="text-nowrap mx-4">
+            <span title="Página actual">{{ currentPage() }}</span> - <span title="Total de páginas">{{ totalPages() }}</span> de <span title="Total de registros">{{ totalRecords() }}</span>
+        </span>
+
+        <button
+            title="Primera página"
+            class="btn btn-ghost"
+            (click)="goFirstPage()"
+            [disabled]="currentPage() <= 1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path fill="currentColor" d="M18.41 7.41L17 6l-6 6l6 6l1.41-1.41L13.83 12zm-6 0L11 6l-6 6l6 6l1.41-1.41L7.83 12z" />
+            </svg>
+        </button>
+
+        <button
+            title="Página anterior"
+            class="btn btn-ghost"
+            (click)="onPreviousPage()"
+            [disabled]="currentPage() <= 1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path fill="currentColor" d="M15.41 16.58L10.83 12l4.58-4.59L14 6l-6 6l6 6z" />
+            </svg>
+        </button>
+
+        <button
+            title="Siguiente página"
+            class="btn btn-ghost"
+            (click)="onNextPage()"
+            [disabled]="currentPage() === totalPages() || totalPages() === 0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path fill="currentColor" d="M8.59 16.58L13.17 12L8.59 7.41L10 6l6 6l-6 6z" />
+            </svg>
+        </button>
+
+        <button
+            title="Ultima página"
+            (click)="goLastPage()"
+            class="btn btn-ghost"
+            [disabled]="currentPage() === totalPages() || totalPages() === 0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path fill="currentColor" d="M5.59 7.41L7 6l6 6l-6 6l-1.41-1.41L10.17 12zm6 0L13 6l6 6l-6 6l-1.41-1.41L16.17 12z" />
+            </svg>
+        </button>
+
+    </div>
+
+</div>
