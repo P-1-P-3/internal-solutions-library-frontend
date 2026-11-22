@@ -1,4 +1,4 @@
-import { Component, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 import { SolutionsCardComponent } from "../../../../shared/components/solutions-card/solutions-card.component";
 import { CatalogSolution } from "../../models/catalog-solution.interface";
 
@@ -9,4 +9,7 @@ import { CatalogSolution } from "../../models/catalog-solution.interface";
 })
 export class SolutionResultGridComponent {
     public solutions = input<CatalogSolution[]>([]);
+    public showDelete = input<boolean>(false);
+
+    deleteRequested = output<string>();
 };

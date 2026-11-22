@@ -17,8 +17,8 @@ export class ClassificationSectionComponent {
     tags         = input.required<Tags[]>();
     technologies = input.required<Technologies[]>();
 
-    tagLabel = (tag: Tags) => tag.tag;
-    technologyLabel = (technology: Technologies) => technology.technology;
+    tagLabel = (tag: Tags) => tag?.tag;
+    technologyLabel = (technology: Technologies) => technology?.technology;
 
     onSelectedTagIdsChange(value: number[]) {
         this.fields().tags().value.set(value);

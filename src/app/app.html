@@ -1,5 +1,9 @@
 @if (isLoggedIn()) {
-    <app-header />
+    <div class="soft-lines-background-gr min-h-screen pt-4">
+        <app-header />
+        
+        <router-outlet />
+    </div>
+} @else {
+    <router-outlet />
 }
-
-<router-outlet />

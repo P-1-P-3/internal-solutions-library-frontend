@@ -88,10 +88,18 @@
                             </svg>
                             Ver repositorio
                         </a>
-    
-                        <a class="btn btn-outline btn-primary w-full" [routerLink]="['../../edit', solution().id]">
-                            Editar solución
-                        </a>
+                        
+                        @if (solution().created_by === currentUser().id || currentUser().role.id == 1) {
+                            <a class="btn btn-outline btn-primary w-full" [routerLink]="['../../edit', solution().id]">
+                                Editar solución
+                            </a>
+                        }
+
+                        @if (currentUser().role.id == 1) {
+                            <button class="btn btn-outline btn-error w-full" (click)="requestDelete(solution().id)">
+                                Eliminar solución
+                            </button>
+                        }
                     </div>
                 </div>
 
@@ -114,3 +122,17 @@
         </div>
     </div>
 </main>
+
+@if (pendingDeleteId()) {
+    <app-confirm-modal
+        title="¿Eliminar solución?"
+        message="Esta acción no se puede deshacer. ¿Seguro que quieres eliminar esta solución?"
+        confirmLabel="Confirmar eliminación"
+        confirmingLabel="Eliminando..."
+        confirmVariant="error"
+        [isConfirming]="isDeleting()"
+        [errorMessage]="deleteError()"
+        (confirmed)="confirmDelete()"
+        (cancelled)="cancelDelete()"
+    />
+}

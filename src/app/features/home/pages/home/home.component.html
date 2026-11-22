@@ -1,7 +1,7 @@
-<div class="w-full lg:w-8/12 lg:mx-auto lg:p-4">
+<div class="lg:mx-auto">
     <main class="min-h-screen w-full">
-        <section class="relative overflow-hidden border-b border-slate-200 px-5 py-16 sm:px-8 lg:py-24">
-            <div class="relative mx-auto max-w-7xl">
+        <section class="relative overflow-hidden rounded-box px-5 py-16 sm:px-8 lg:py-24">
+            <div class="w-full lg:w-8/12 mx-auto">
                 <div class="max-w-3xl">
                     <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
                         Libreria interna de <span class="text-primary">soluciones reutilizables</span>
@@ -37,14 +37,16 @@
             </div>
         </section>
 
-        <div class="mx-auto max-w-7xl space-y-16 px-5 py-14 sm:px-8 lg:py-20">
-            <section>
+        <section class="bg-gray-100 border-y-2 border-white py-14 lg:py-20">
+            <div class="w-full lg:w-8/12 mx-auto px-5 sm:px-8">
                 <app-section-title title="Categorías" eyebrow="Explora por" />
-
+                
                 <app-category-stat [categories]="stat().solutionsByCategory" />
-            </section>
-
-            <section>
+            </div>
+        </section>
+        
+        <section class="py-14 lg:py-20">
+            <div class="w-full lg:w-8/12 mx-auto px-5 sm:px-8">
                 <app-section-title title="Contenido destacado" eyebrow="Seleccionado para ti" action="Ver catálogo completo" />
 
                 <div class="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -54,7 +56,7 @@
                         />
                     }
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 </div>

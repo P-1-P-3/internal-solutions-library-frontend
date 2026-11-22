@@ -1,0 +1,37 @@
+<dialog
+    class="modal modal-open rounded-box"
+    aria-labelledby="confirm-modal-title"
+    (keydown.escape)="close()">
+    <div class="modal-box">
+        <h2 id="confirm-modal-title" class="text-lg font-bold">{{ title() }}</h2>
+        <p class="mt-4 text-slate-600 text-sm">{{ message() }}</p>
+
+        @if (errorMessage()) {
+            <p class="mt-4 text-sm text-error" role="alert">{{ errorMessage() }}</p>
+        }
+
+        <div class="modal-action">
+            <button type="button" class="btn btn-outline" [disabled]="isConfirming()" (click)="close()">{{ cancelLabel() }}</button>
+            <button
+                type="button"
+                class="btn"
+                [class.btn-primary]="confirmVariant() === 'primary'"
+                [class.btn-neutral]="confirmVariant() === 'neutral'"
+                [class.btn-error]="confirmVariant() === 'error'"
+                [class.btn-warning]="confirmVariant() === 'warning'"
+                [class.btn-success]="confirmVariant() === 'success'"
+                [disabled]="isConfirming()"
+                (click)="confirm()">
+                {{ isConfirming() ? confirmingLabel() : confirmLabel() }}
+            </button>
+        </div>
+    </div>
+
+    <button
+        type="button"
+        class="modal-backdrop"
+        [attr.aria-label]="cancelLabel()"
+        [disabled]="isConfirming()"
+        (click)="close()">
+    </button>
+</dialog>

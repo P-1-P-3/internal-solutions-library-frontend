@@ -1,4 +1,4 @@
-import { Component, input } from "@angular/core";
+import { Component, input, output } from "@angular/core";
 import { CatalogSolution } from "../../../features/solutions/models/catalog-solution.interface";
 import { RouterLink } from "@angular/router";
 
@@ -8,5 +8,8 @@ import { RouterLink } from "@angular/router";
     imports: [RouterLink],
 })
 export class SolutionsCardComponent {
-    public solution = input<CatalogSolution>();
+    public solution = input.required<CatalogSolution>();
+    public showDelete = input<boolean>(false);
+
+    deleteRequested = output<string>();
 };
