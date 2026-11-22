@@ -1,4 +1,5 @@
-<div class="card h-auto lg:h-96 w-full bg-base-100 shadow-sm border-t-3 border-t-primary border border-slate-200">
+<div 
+    class="card h-auto {{ showDelete() ? 'lg:h-105.75' : 'lg:h-96' }} w-full bg-base-100 shadow-sm border-t-3 border-t-primary border border-slate-200">
     <div class="card-body justify-between h-full">
         <div class="flex flex-col gap-2">
             <div class="badge badge-soft badge-primary font-medium uppercase">{{ solution()?.category.type }}</div>
@@ -45,6 +46,16 @@
                     </svg>
                 </a>
             </div>
+            
+            @if (showDelete()) {
+                <button type="button" class="btn btn-ghost btn-error w-full mt-2" (click)="deleteRequested.emit(solution().id)">
+                    <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z" />
+                    </svg>
+                    Eliminar solución
+                </button>
+            }
         </div>
     </div>
 </div>

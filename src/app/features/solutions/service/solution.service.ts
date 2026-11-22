@@ -24,6 +24,13 @@ export class SolutionService {
         return this._httpClient.get<Response<CatalogSolution>>(`${this.url}reusable-solutions/${solutionId}`);
     };
 
+    getSolutionsByUser(pagination: Pagination, filters?: SolutionFilters, sort?: SolutionSort): Observable<Response<CatalogSolutionRes>> {
+        const params = { filters, pagination, sort };
+        const headers = this.getHeaders();
+
+        return this._httpClient.post<Response<CatalogSolutionRes>>(`${this.url}reusable-solutions/user`, params, { headers });
+    };
+
     getSolutions(pagination: Pagination, filters?: SolutionFilters, sort?: SolutionSort): Observable<Response<CatalogSolutionRes>> {
         const params = { filters, pagination, sort };
         const headers = this.getHeaders();
@@ -54,5 +61,9 @@ export class SolutionService {
     updateSolution({id, ...solution}: UpdateSolution): Observable<Response<UpdateSolution>> {
         const headers = this.getHeaders();
         return this._httpClient.put<Response<UpdateSolution>>(`${this.url}reusable-solutions/${id}`, solution, { headers });
+    };
+
+    deleteSolution(id: string): Observable<Response<any>> {
+        return this._httpClient.delete<Response<any>>(`${this.url}reusable-solutions/${id}`);
     };
 };

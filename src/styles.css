@@ -4,5 +4,34 @@
 }
 
 body {
-    color: var(--color-slate-950)
+    color: var(--color-slate-950);
+}
+
+.soft-lines-background-gr {
+    background-image:
+        radial-gradient(ellipse 12% 10% at 0% 100%, rgba(37, 99, 235, .28), transparent 100%),
+        radial-gradient(ellipse 22% 18% at 0% 100%, rgba(59, 130, 246, .2), transparent 100%),
+        radial-gradient(ellipse 32% 26% at 0% 100%, rgba(147, 197, 253, .2), transparent 100%),
+        radial-gradient(ellipse 32% 30% at 100% 0%, rgba(37, 99, 235, .28), transparent 100%),
+        radial-gradient(ellipse 42% 38% at 100% 0%, rgba(59, 130, 246, .2), transparent 100%),
+        radial-gradient(ellipse 52% 46% at 98% 2%, rgba(147, 197, 253, .2), transparent 100%),
+        radial-gradient(ellipse at 16% 0%, rgba(255, 255, 255, .7), transparent 48%),
+        repeating-linear-gradient(155deg, transparent 0, transparent 52px, rgba(148, 163, 184, .035) 58px, rgba(255, 255, 255, .12) 84px, transparent 112px, transparent 168px);
+    background-size:
+        100% clamp(640px, 80vh, 1100px),
+        100% clamp(640px, 80vh, 1100px),
+        100% clamp(640px, 80vh, 1100px),
+        100% clamp(640px, 80vh, 1100px),
+        100% clamp(640px, 80vh, 1100px),
+        100% clamp(640px, 80vh, 1100px),
+        100% clamp(640px, 80vh, 1100px),
+        auto;
+    background-position: left bottom, left bottom, left bottom, left top, left top, left top, left top, left top;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+}
+
+.soft-lines-background {
+    background-image:
+        radial-gradient(ellipse at 16% 0%, rgba(255, 255, 255, .7), transparent 48%),
+        repeating-linear-gradient(155deg, transparent 0, transparent 52px, rgba(148, 163, 184, .035) 58px, rgba(255, 255, 255, .12) 84px, transparent 112px, transparent 168px);
 }

@@ -15,6 +15,12 @@ export const solutionsRoutes: Routes = [
         canActivate: [ roleGuard([1, 2]) ]
     },
     {
+        path: 'my-contributions',
+        title: 'Mis contribuciones',
+        loadComponent: () => import('./pages/my-contributions/my-contributions.component'),
+        canActivate: [ roleGuard([1, 2]) ]
+    },
+    {
         path: 'contribute',
         title: 'Contribuir',
         loadComponent: () => import('./pages/contribute/contribute.component'),

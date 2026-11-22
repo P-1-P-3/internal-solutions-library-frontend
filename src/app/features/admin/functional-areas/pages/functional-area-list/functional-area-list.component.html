@@ -10,8 +10,8 @@
         </div>
 
         <div class="flex flex-col gap-3 sm:flex-row">
-            <input type="text" placeholder="Nueva categoría..." class="input w-full" #inNewTag />
-            <button class="btn btn-neutral" (click)="addCategory(inNewTag.value)">Agregar</button>
+            <input type="text" placeholder="Nueva área funcional..." class="input w-full" #inNewTag />
+            <button class="btn btn-primary" (click)="addCategory(inNewTag.value)">Agregar</button>
         </div>
 
         @if (msgSuccess()) {

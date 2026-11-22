@@ -14,12 +14,19 @@ export class HeaderComponent {
 
     readonly userData = computed(() => this._authService.currentUser());
 
-    readonly menuItems = [
+    private readonly menuItems = [
         { label: 'Inicio', route: '/' },
         { label: 'Catálogo', route: '/catalog' },
         { label: 'Contribuir', route: '/catalog/contribute' },
         { label: 'Administración', route: '/admin/users' }
     ];
+
+    readonly allowedMenuItems = computed(() => {
+        if (this.userData().role.id !== 1)
+            return this.menuItems.filter((item) => !item.route.includes('admin'));
+
+        return this.menuItems;
+    });
 
     logout() {
         this._authService.logout().subscribe({
